@@ -21,7 +21,7 @@ public class Main extends Application {
 
     public static ArrayList<String> list = new ArrayList<>();
     public static Stage stage = new Stage();
-    final String name = "AMFOTLN";
+    final String name = "";
     public static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) throws IOException {
