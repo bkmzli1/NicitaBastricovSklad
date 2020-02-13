@@ -5,7 +5,7 @@ plugins {
 
 def versions = '1.1.1.1'
 def name = 'хз'
-def main = 'ru.sp.napomenalka.Main'
+def main = 'ru.bastrik.sclad.Main'
 
 
 launch4j {
