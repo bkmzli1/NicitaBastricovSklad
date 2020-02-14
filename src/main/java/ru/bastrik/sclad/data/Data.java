@@ -11,8 +11,11 @@ import java.util.Collection;
 import java.util.List;
 
 public enum Data implements Serializable {
-    NAME(new ArrayList<String>()),
-    DATE(new ArrayList<String>());
+    NAME_AUTHOR(new ArrayList<String>()),
+    TEXT(new ArrayList<String>()),
+    NAME_EXECUTOR(new ArrayList<String>()),
+    DATE_START(new ArrayList<String>()),
+    DATE_STOP(new ArrayList<String>());
     public static final Logger logger = LogManager.getLogger();
     private Object value;
     private static String fileAddress = System.getenv("APPDATA") + "\\.nikita";

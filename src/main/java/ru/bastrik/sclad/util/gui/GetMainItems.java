@@ -1,37 +1,64 @@
 package ru.bastrik.sclad.util.gui;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import ru.bastrik.sclad.controller.ControllerMain;
 
 public class GetMainItems {
-    public TextField text;
-    public DatePicker dateText;
+    public TextField author;
+    public TextField txt;
+    public TextField executor;
+    public DatePicker dateStart;
+    public DatePicker dateStop;
     public TableView table;
 
-    public GetMainItems(TextField text, DatePicker dateText, TableView table) {
-        this.text = text;
-        this.dateText = dateText;
+    public GetMainItems(TextField author, TextField txt, TextField executor, DatePicker dateStart, DatePicker dateStop, TableView table) {
+        this.author = author;
+        this.txt = txt;
+        this.executor = executor;
+        this.dateStart = dateStart;
+        this.dateStop = dateStop;
         this.table = table;
     }
 
-    public TextField getText() {
-        return text;
+    public TextField getAuthor() {
+        return author;
     }
 
-    public void setText(TextField text) {
-        this.text = text;
+    public void setAuthor(TextField author) {
+        this.author = author;
     }
 
-    public DatePicker getDateText() {
-        return dateText;
+    public TextField getTxt() {
+        return txt;
     }
 
-    public void setDateText(DatePicker dateText) {
-        this.dateText = dateText;
+    public void setTxt(TextField txt) {
+        this.txt = txt;
+    }
+
+    public TextField getExecutor() {
+        return executor;
+    }
+
+    public void setExecutor(TextField executor) {
+        this.executor = executor;
+    }
+
+    public DatePicker getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(DatePicker dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public DatePicker getDateStop() {
+        return dateStop;
+    }
+
+    public void setDateStop(DatePicker dateStop) {
+        this.dateStop = dateStop;
     }
 
     public TableView getTable() {
@@ -41,5 +68,6 @@ public class GetMainItems {
     public void setTable(TableView table) {
         this.table = table;
     }
+
 
 }

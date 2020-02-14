@@ -21,20 +21,65 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ControllerMain {
-    public TextField text;
-    public DatePicker dateText;
+    public TextField author;
+    public TextField txt;
+    public TextField executor;
+    public DatePicker dateStart;
+    public DatePicker dateStop;
     public TableView table;
-    static ArrayList<String> name;
-    static ArrayList<String> date;
+
+    static ArrayList<String> authors;
+    static ArrayList<String> txts;
+    static ArrayList<String> executors;
+    static ArrayList<String> dateStarts;
+    static ArrayList<String> dateStops;
     static ArrayList<Table> tables = new ArrayList<>();
-    static TableColumn<Table, String> TCtype = new TableColumn<Table, String>("дата");
+
+
     static GetMainItems getMainItems;
 
     public static final Logger logger = LogManager.getLogger();
 
+
     public void initialize() {
-        getMainItems = new GetMainItems(text, dateText, table);
+        dataSettings(dateStart);
+        dataSettings(dateStop);
+        getMainItems = new GetMainItems(author, txt, executor, dateStart, dateStop, table);
         loadData();
+
+
+        TableColumn<Table, String> Tauthors = new TableColumn<Table, String>("имя заказчика");
+        TableColumn<Table, String> Ttxts = new TableColumn<Table, String>("заказ");
+        TableColumn<Table, String> Texecutors = new TableColumn<Table, String>("имя исполнителя");
+        TableColumn<Table, String> TdateStarts = new TableColumn<Table, String>("дата заказа");
+        TableColumn<Table, String> TdateStops = new TableColumn<Table, String>("дата окончания");
+
+        Tauthors.setCellValueFactory(new PropertyValueFactory<>("NAME_AUTHOR"));
+        Ttxts.setCellValueFactory(new PropertyValueFactory<>("TEXT"));
+        Texecutors.setCellValueFactory(new PropertyValueFactory<>("NAME_EXECUTOR"));
+        TdateStarts.setCellValueFactory(new PropertyValueFactory<>("DATE_START"));
+        TdateStops.setCellValueFactory(new PropertyValueFactory<>("DATE_STOP"));
+
+
+        table.getColumns().addAll(Tauthors, Ttxts, Texecutors, TdateStarts, TdateStops);
+        upTable();
+
+    }
+
+    public void add(ActionEvent actionEvent) {
+        if (!author.getText().equals("") & !txt.getText().equals("") & !executor.getText().equals("") & !dateStart.getValue().equals("") & !dateStop.getValue().equals("")) {
+            authors.add(author.getText());
+            txts.add(txt.getText());
+            executors.add(executor.getText());
+            dateStarts.add(dateStart.getValue().toString());
+            dateStops.add(dateStart.getValue().toString());
+            upTable();
+            setDate();
+        }
+
+    }
+
+    void dataSettings(DatePicker datePicker) {
         StringConverter<LocalDate> converter = new StringConverter<LocalDate>() {
             DateTimeFormatter dateFormatter =
                     DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -58,25 +103,8 @@ public class ControllerMain {
             }
 
         };
-        dateText.setPromptText("дд/мм/гггг");
-        TableColumn<Table, String> TCorganization = new TableColumn<Table, String>("имя");
-
-        TCtype.setMaxWidth(77);
-        TCtype.setMinWidth(74);
-        TCorganization.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TCtype.setCellValueFactory(new PropertyValueFactory<>("date"));
-
-        table.getColumns().addAll(TCorganization, TCtype);
-        upTable();
-
-    }
-
-    public void add(ActionEvent actionEvent) {
-        name.add(text.getText());
-        date.add(String.valueOf(dateText.getValue()));
-        upTable();
-        setDate();
-
+        datePicker.setPromptText("дд/мм/гггг");
+        datePicker.setConverter(converter);
     }
 
     public void remove(ActionEvent actionEvent) {
@@ -84,20 +112,26 @@ public class ControllerMain {
     }
 
     void loadData() {
-        date = Data.DATE.getValuetAL();
-        name = Data.NAME.getValuetAL();
+        authors = Data.NAME_AUTHOR.getValuetAL();
+        txts = Data.TEXT.getValuetAL();
+        executors = Data.NAME_EXECUTOR.getValuetAL();
+        dateStarts = Data.DATE_START.getValuetAL();
+        dateStops = Data.DATE_STOP.getValuetAL();
     }
 
     void setDate() {
-        Data.NAME.setValue(name);
-        Data.DATE.setValue(date);
+        Data.NAME_AUTHOR.setValue(authors);
+        Data.TEXT.setValue(txts);
+        Data.NAME_EXECUTOR.setValue(executors);
+        Data.DATE_START.setValue(dateStarts);
+        Data.DATE_STOP.setValue(dateStops);
         Data.save();
     }
 
     void upTable() {
         tables.clear();
-        for (int i = 0; i < name.size(); i++) {
-            tables.add(new Table(name.get(i), date.get(i)));
+        for (int i = 0; i < authors.size(); i++) {
+            tables.add(new Table(authors.get(i), txts.get(i), executors.get(i), dateStarts.get(i), dateStops.get(i)));
         }
         ObservableList<Table> list = FXCollections.observableArrayList();
         list.addAll(tables);
